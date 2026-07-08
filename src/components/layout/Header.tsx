@@ -1,10 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="w-full border-b border-slate-border bg-offwhite/90 backdrop-blur-md sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
-        {/* Logo simulé */}
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 bg-navy flex items-center justify-center text-offwhite font-bold text-sm tracking-widest">
             CO
@@ -49,9 +54,52 @@ export default function Header() {
           </li>
         </ul>
 
-        {/* Burger menu mobile (simple) */}
-        <button className="md:hidden text-navy text-2xl">&equiv;</button>
+        {/* Burger button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-navy text-3xl leading-none focus:outline-none"
+          aria-label="Menu"
+        >
+          {isOpen ? "×" : "☰"}
+        </button>
       </nav>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden border-t border-slate-border bg-offwhite">
+          <ul className="flex flex-col px-8 py-6 gap-6 text-sm uppercase tracking-[0.15em] text-charcoal/70">
+            <li>
+              <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-navy transition-colors">
+                Accueil
+              </Link>
+            </li>
+            <li>
+              <Link href="/rejoindre" onClick={() => setIsOpen(false)} className="hover:text-navy transition-colors">
+                Rejoindre
+              </Link>
+            </li>
+            <li>
+              <Link href="/boutique" onClick={() => setIsOpen(false)} className="hover:text-navy transition-colors">
+                Boutique
+              </Link>
+            </li>
+            <li>
+              <Link href="/evenements" onClick={() => setIsOpen(false)} className="hover:text-navy transition-colors">
+                Événements
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/cabinets"
+                onClick={() => setIsOpen(false)}
+                className="inline-block bg-gold-matte text-navy border border-gold-matte px-5 py-2.5 font-bold text-center hover:bg-gold-matte/90 transition-colors"
+              >
+                Devenir Partenaire
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 }
