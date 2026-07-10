@@ -1,19 +1,34 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { Suspense, useSearchParams } from "next/navigation";
 
-export default function InscriptionPage() {
+function InscriptionForm() {
   const searchParams = useSearchParams();
   const sectionPreselectionnee = searchParams.get("section") || "";
 
+  const sectionLabels: Record<string, string> = {
+    "centre-nord": "Centre-Nord (Parakou)",
+    "sud": "Sud (UAC)",
+    "cotonou": "Cotonou",
+  };
+
   return (
     <div className="min-h-screen">
-      <section className="bg-royal text-white py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Inscription CUDO 2026</h1>
-          <p className="mt-4 text-lg text-white/80 max-w-2xl">
+      <section className="bg-black text-white py-16 md:py-20 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/images/hero-bg.jpeg" alt="Inscription CUDO 2026" className="w-full h-full object-cover opacity-30" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 to-black/50" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <span className="text-red text-sm uppercase tracking-[0.3em] font-bold">CUDO 2026</span>
+          <h1 className="text-4xl md:text-5xl font-bold mt-4 leading-tight">
             {sectionPreselectionnee
-              ? `Vous vous inscrivez dans la section ${sectionPreselectionnee === "centre-nord" ? "Centre-Nord (Parakou)" : sectionPreselectionnee === "sud" ? "Sud (UAC)" : "Cotonou"}.`
+              ? `Inscription — Section ${sectionLabels[sectionPreselectionnee] || sectionPreselectionnee}`
+              : "Inscription à la CUDO 2026"}
+          </h1>
+          <p className="mt-4 text-lg text-white/70 max-w-2xl">
+            {sectionPreselectionnee
+              ? `Vous vous inscrivez dans la section ${sectionLabels[sectionPreselectionnee] || sectionPreselectionnee}. Remplissez le formulaire ci-dessous.`
               : "Choisissez votre section universitaire et rejoignez la compétition."}
           </p>
         </div>
@@ -68,5 +83,13 @@ export default function InscriptionPage() {
         </form>
       </section>
     </div>
+  );
+}
+
+export default function InscriptionPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement...</div>}>
+      <InscriptionForm />
+    </Suspense>
   );
 }
