@@ -1,6 +1,7 @@
 "use client";
 
-import { Suspense, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 function InscriptionForm() {
   const searchParams = useSearchParams();
@@ -28,7 +29,7 @@ function InscriptionForm() {
           </h1>
           <p className="mt-4 text-lg text-white/70 max-w-2xl">
             {sectionPreselectionnee
-              ? `Vous vous inscrivez dans la section ${sectionLabels[sectionPreselectionnee] || sectionPreselectionnee}. Remplissez le formulaire ci-dessous.`
+              ? `Vous vous inscrivez dans la section ${sectionLabels[sectionPreselectionnee] || sectionPreselectionnee}.`
               : "Choisissez votre section universitaire et rejoignez la compétition."}
           </p>
         </div>
@@ -88,7 +89,7 @@ function InscriptionForm() {
 
 export default function InscriptionPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-charcoal/50">Chargement...</div>}>
       <InscriptionForm />
     </Suspense>
   );
