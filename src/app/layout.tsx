@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "CO.BE - Club OHADA Benin",
-  description: "Plateforme strategique du Club OHADA Benin",
+  title: "COB – Club OHADA Bénin",
+  description: "L'élite du droit des affaires au Bénin. 3 fois champion d'Afrique.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,22 +1,22 @@
 import HeroSection from "@/components/home/HeroSection";
-import StudentNetworkSection from "@/components/home/StudentNetworkSection";
-import PartnersSection from "@/components/home/PartnersSection";
-import VisionSection from "@/components/home/VisionSection";
+import ChampionBanner from "@/components/home/ChampionBanner";
+import PresidenteSection from "@/components/home/PresidenteSection";
+import SectionsUniversitaires from "@/components/home/SectionsUniversitaires";
+import TimelineCUDO from "@/components/home/TimelineCUDO";
+import ActualitesCarousel from "@/components/home/ActualitesCarousel";
+import PartenairesSection from "@/components/home/PartenairesSection";
 import FinalCTASection from "@/components/home/FinalCTASection";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <StudentNetworkSection />
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="border-t border-slate-border"></div>
-      </div>
-      <PartnersSection />
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="border-t border-slate-border"></div>
-      </div>
-      <VisionSection />
+      <ChampionBanner />
+      <PresidenteSection />
+      <SectionsUniversitaires />
+      <TimelineCUDO />
+      <ActualitesCarousel />
+      <PartenairesSection />
       <FinalCTASection />
     </div>
   );
