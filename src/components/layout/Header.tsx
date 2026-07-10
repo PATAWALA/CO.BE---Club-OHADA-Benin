@@ -8,7 +8,7 @@ export default function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Fermer le dropdown si on clique en dehors
+  // Fermer le dropdown desktop si on clique en dehors
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -19,38 +19,72 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Empêcher le scroll quand le menu mobile est ouvert
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <header className="w-full border-b border-slate-200 bg-white sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <div className="w-10 h-10 bg-blue-900 flex items-center justify-center text-white font-bold text-sm tracking-widest">COB</div>
+          <div className="w-10 h-10 bg-blue-900 flex items-center justify-center text-white font-bold text-sm tracking-widest">
+            COB
+          </div>
           <div className="flex flex-col leading-tight">
             <span className="text-blue-900 font-bold tracking-[0.3em] text-lg">COB</span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Club OHADA Bénin</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+              Club OHADA Bénin
+            </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation (inchangée) */}
         <div className="hidden md:flex items-center gap-6">
           <ul className="flex items-center gap-8 text-xs uppercase tracking-[0.12em] text-slate-600 font-medium">
-            <li><Link href="/" className="hover:text-blue-900 transition-colors">Accueil</Link></li>
-            <li><Link href="/competition" className="hover:text-blue-900 transition-colors">CUDO 2026</Link></li>
-            <li><Link href="/evenements" className="hover:text-blue-900 transition-colors">Événements</Link></li>
+            <li>
+              <Link href="/" className="hover:text-blue-900 transition-colors">
+                Accueil
+              </Link>
+            </li>
+            <li>
+              <Link href="/competition" className="hover:text-blue-900 transition-colors">
+                CUDO 2026
+              </Link>
+            </li>
+            <li>
+              <Link href="/evenements" className="hover:text-blue-900 transition-colors">
+                Événements
+              </Link>
+            </li>
           </ul>
-          
+
           <div className="flex items-center gap-3">
-            {/* BOUTON 1 : REJOINDRE (Étudiants & Universités) */}
+            {/* REJOINDRE avec dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="bg-red-600 text-white px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] hover:bg-red-700 transition-colors flex items-center gap-2"
               >
                 REJOINDRE
-                <svg className={`w-3 h-3 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className={`w-3 h-3 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              
+
               {dropdownOpen && (
                 <div className="absolute top-full left-0 mt-1 bg-white border border-slate-200 shadow-lg z-50 min-w-[300px]">
                   <p className="px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold border-b border-slate-200">
@@ -80,21 +114,23 @@ export default function Header() {
                     <span className="font-bold text-blue-900 block">Section Cotonou</span>
                     <span className="text-xs text-slate-500 mt-0.5">Campus de Cotonou</span>
                   </Link>
-                  
-                  {/* LIEN STRATÉGIQUE NOUVELLES UNIVERSITÉS (NATIONALES & INTERNATIONALES) */}
                   <Link
                     href="/inscription-universite"
                     onClick={() => setDropdownOpen(false)}
                     className="block px-4 py-3.5 text-sm bg-blue-50 hover:bg-blue-100 transition-colors"
                   >
-                    <span className="font-bold text-red-600 block text-xs tracking-wider uppercase">Nouvelle Université ?</span>
-                    <span className="text-xs text-blue-900 font-medium block mt-0.5">Inscrire votre établissement (Bénin & International)</span>
+                    <span className="font-bold text-red-600 block text-xs tracking-wider uppercase">
+                      Nouvelle Université ?
+                    </span>
+                    <span className="text-xs text-blue-900 font-medium block mt-0.5">
+                      Inscrire votre établissement (Bénin & International)
+                    </span>
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* BOUTON 2 : DEVENIR PARTENAIRE (Séparé et mis en valeur pour les cabinets) */}
+            {/* DEVENIR PARTENAIRE */}
             <Link
               href="/partenariats"
               className="border-2 border-blue-900 text-blue-900 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] hover:bg-blue-900 hover:text-white transition-colors"
@@ -105,43 +141,107 @@ export default function Header() {
         </div>
 
         {/* Mobile burger */}
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-blue-900 text-3xl leading-none" aria-label="Menu">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-blue-900 text-3xl leading-none focus:outline-none"
+          aria-label="Menu"
+        >
           {isOpen ? "×" : "☰"}
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white">
-          <div className="flex flex-col px-6 py-4 gap-3 text-sm uppercase tracking-[0.12em] text-slate-700 font-medium">
-            <Link href="/" onClick={() => setIsOpen(false)}>Accueil</Link>
-            <Link href="/competition" onClick={() => setIsOpen(false)}>CUDO 2026</Link>
-            <Link href="/evenements" onClick={() => setIsOpen(false)}>Événements</Link>
-            
-            {/* Sections étudiantes et universités sur Mobile */}
-            <div className="border-t border-slate-200 pt-3 mt-2">
-              <p className="text-[10px] text-slate-400 mb-2">Rejoindre une section ou un réseau :</p>
-              <Link href="/inscription?section=centre-nord" onClick={() => setIsOpen(false)} className="block bg-red-600 text-white px-4 py-2.5 font-bold text-center text-xs mb-2">
-                Section Centre-Nord (Parakou)
-              </Link>
-              <Link href="/inscription?section=sud" onClick={() => setIsOpen(false)} className="block bg-red-600 text-white px-4 py-2.5 font-bold text-center text-xs mb-2">
-                Section Sud (UAC)
-              </Link>
-              <Link href="/inscription?section=cotonou" onClick={() => setIsOpen(false)} className="block bg-red-600 text-white px-4 py-2.5 font-bold text-center text-xs mb-2">
-                Section Cotonou
-              </Link>
-              <Link href="/inscription-universite" onClick={() => setIsOpen(false)} className="block bg-blue-900 text-white px-4 py-2.5 font-bold text-center text-xs">
-                Inscrire une nouvelle Université
-              </Link>
-            </div>
-            
-            {/* Partenariat sur Mobile */}
-            <Link href="/partenariats" onClick={() => setIsOpen(false)} className="border-2 border-blue-900 text-blue-900 px-4 py-3 font-bold text-center mt-2 text-xs">
-              DEVENIR PARTENAIRE
+      {/* Mobile menu – DESIGN PREMIUM */}
+      <div
+        className={`md:hidden fixed inset-0 top-[65px] bg-white z-40 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full overflow-y-auto px-8 py-8">
+          {/* Navigation principale */}
+          <div className="space-y-6">
+            <Link
+              href="/"
+              onClick={() => setIsOpen(false)}
+              className="block text-lg font-medium text-slate-800 hover:text-blue-900 transition-colors"
+            >
+              Accueil
+            </Link>
+            <Link
+              href="/competition"
+              onClick={() => setIsOpen(false)}
+              className="block text-lg font-medium text-slate-800 hover:text-blue-900 transition-colors"
+            >
+              CUDO 2026
+            </Link>
+            <Link
+              href="/evenements"
+              onClick={() => setIsOpen(false)}
+              className="block text-lg font-medium text-slate-800 hover:text-blue-900 transition-colors"
+            >
+              Événements
             </Link>
           </div>
+
+          {/* Séparateur */}
+          <div className="my-8 border-t border-slate-200" />
+
+          {/* Section REJOINDRE */}
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold mb-4">
+              Rejoindre une section
+            </p>
+            <div className="space-y-4">
+              <Link
+                href="/inscription?section=centre-nord"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-slate-100 text-slate-700 hover:text-blue-900 transition-colors"
+              >
+                <span className="font-medium">Section Centre-Nord</span>
+                <span className="text-xs text-slate-400">Parakou</span>
+              </Link>
+              <Link
+                href="/inscription?section=sud"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-slate-100 text-slate-700 hover:text-blue-900 transition-colors"
+              >
+                <span className="font-medium">Section Sud</span>
+                <span className="text-xs text-slate-400">UAC</span>
+              </Link>
+              <Link
+                href="/inscription?section=cotonou"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-slate-100 text-slate-700 hover:text-blue-900 transition-colors"
+              >
+                <span className="font-medium">Section Cotonou</span>
+                <span className="text-xs text-slate-400">Campus Cotonou</span>
+              </Link>
+            </div>
+
+            <Link
+              href="/inscription-universite"
+              onClick={() => setIsOpen(false)}
+              className="mt-4 inline-flex items-center text-sm text-blue-900 font-medium hover:text-red-600 transition-colors"
+            >
+              <span>Inscrire une nouvelle université</span>
+              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Séparateur */}
+          <div className="my-8 border-t border-slate-200" />
+
+          {/* Bouton Partenaire */}
+          <Link
+            href="/partenariats"
+            onClick={() => setIsOpen(false)}
+            className="block w-full border-2 border-blue-900 text-blue-900 text-center py-4 font-bold text-sm uppercase tracking-[0.1em] hover:bg-blue-900 hover:text-white transition-colors"
+          >
+            Devenir Partenaire
+          </Link>
         </div>
-      )}
+      </div>
     </header>
   );
 }
