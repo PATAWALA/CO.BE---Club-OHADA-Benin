@@ -132,7 +132,7 @@ export default function Header() {
 
             {/* DEVENIR PARTENAIRE */}
             <Link
-              href="/partenariats"
+              href="/devenir-partenaire"
               className="border-2 border-blue-900 text-blue-900 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] hover:bg-blue-900 hover:text-white transition-colors"
             >
               DEVENIR PARTENAIRE
@@ -234,7 +234,7 @@ export default function Header() {
 
           {/* Bouton Partenaire */}
           <Link
-            href="/partenariats"
+            href="/devenir-partenaire"
             onClick={() => setIsOpen(false)}
             className="block w-full border-2 border-blue-900 text-blue-900 text-center py-4 font-bold text-sm uppercase tracking-[0.1em] hover:bg-blue-900 hover:text-white transition-colors"
           >
