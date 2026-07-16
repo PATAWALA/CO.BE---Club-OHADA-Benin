@@ -12,7 +12,7 @@ export default function FinalCTASection() {
           <a href="/inscription" className="inline-block bg-navy text-offwhite border border-navy px-8 py-4 text-sm font-bold uppercase tracking-[0.15em] hover:bg-navy/90 transition-colors rounded-none">
             S&apos;inscrire à la CUDO 2026
           </a>
-          <a href="/partenariats" className="inline-block bg-gold-matte text-navy border border-gold-matte px-8 py-4 text-sm font-bold uppercase tracking-[0.15em] hover:bg-gold-matte/90 transition-colors rounded-none">
+          <a href="/devenir-partenaire" className="inline-block bg-gold-matte text-navy border border-gold-matte px-8 py-4 text-sm font-bold uppercase tracking-[0.15em] hover:bg-gold-matte/90 transition-colors rounded-none">
             Devenir Partenaire
           </a>
         </div>
