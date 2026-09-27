@@ -9,7 +9,7 @@ export default function PresidenteSection() {
         <div>
           <div className="border-l-4 border-red pl-6">
             <h2 className="text-3xl md:text-4xl font-bold text-royal tracking-tight">
-              Le Mot de la Présidente
+              Le Mot du Président
             </h2>
           </div>
           <div className="mt-6 space-y-4 text-charcoal/80 leading-relaxed text-sm md:text-base">
@@ -43,12 +43,12 @@ export default function PresidenteSection() {
         {/* Photo à droite */}
         <div className="border border-border p-2 order-first md:order-last">
           <img
-            src="/images/presidente.jpeg"
-            alt="Mme ZOSSOUNGBO Cléopâtre, Présidente Nationale du Club OHADA Bénin"
+            src="/images/president.png"
+            alt="Dr James Jairus A. Loudo, Président National du Club OHADA Bénin"
             className="w-full h-auto object-cover"
           />
           <p className="mt-3 text-xs text-center text-charcoal/50 uppercase tracking-[0.2em] font-bold">
-            Mme ZOSSOUNGBO Cléopâtre<br />Présidente Nationale
+            Dr James Jairus A. Loudo<br />Président National
           </p>
         </div>
 
